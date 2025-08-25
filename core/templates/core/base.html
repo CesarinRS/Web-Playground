@@ -12,6 +12,8 @@
     <link href="{% static 'core/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'core/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'core/css/main.css' %}" rel="stylesheet">
+      <!-- Favicon -->
+      <link rel="icon" type="image/x-icon" href="{% static 'core/img/knight.ico' %}?v=1">
   </head>
   <body>
     <body>
@@ -30,13 +32,29 @@
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'pages:pages' %}">Páginas</a>
               </li>
+              <li class="nav-item">
+                 <a class="nav-link" href="{% url 'profiles:list' %}">Perfiles</a>
+              </li>
             </ul>
             <ul class="navbar-nav">
+              {% if not request.user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'login' %}">Acceder</a>
+                </li>
               <li class="nav-item">
-                <a class="nav-link" href="/admin/">
-                  {% if request.user.is_staff %}Admin{% else %}Acceder{% endif %}
-                </a>
-              </li>
+                  <a class="nav-link" href="{% url 'signup' %}">Registrarse</a>
+                </li>
+              {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'messenger:list' %}">Mensajes</a>
+                  </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'profile' %}">Perfil</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'logout' %}">Cerrar sesión</a>
+                </li>
+              {% endif %}
             </ul>
           </div>
         </div>
